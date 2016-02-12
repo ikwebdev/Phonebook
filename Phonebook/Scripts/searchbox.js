@@ -1,11 +1,9 @@
-﻿
-(function ($) {
+﻿(function ($) {
     $.searchbox = {};
 
     $.extend(true, $.searchbox, {
         settings: {
             url: '/search',
-            param: 'query',
             dom_id: '#results',
             delay: 100,
             loading_css: '#loading',
@@ -24,15 +22,27 @@
             $($.searchbox.settings.loading_css).hide()
         },
 
-        process: function (terms) {
+        process: function (inputs) {
             var path = $.searchbox.settings.url.split('?'),
-              query = $.searchbox.settings.param + '=' + terms,
               base = path[0],
               params = path[1],
-              query_string = query;
+              query_string = "";
 
-            if (params) query_string = [params.replace('&amp;', '&'), query].join('&')
-           
+            var len = inputs.size();
+            if (len) {
+                $.each(inputs, function (index, element) {
+                    element = $(element);
+                    console.log(element);
+                    query_string += element.attr("name") + "=" + element.val();
+                    if (len - 1 != index) {
+                        query_string += "&";
+                    }
+                })
+
+                console.log(query_string);
+            }
+
+
             $.get([base, '?', query_string].join(''), function (data) {
                 $($.searchbox.settings.dom_id).html(data)
             })
@@ -52,8 +62,10 @@
     $.fn.searchbox = function (config) {
         var settings = $.extend(true, $.searchbox.settings, config || {})
 
-        $.searchbox.settings.on_start && $.searchbox.settings.on_start() 
+        $.searchbox.settings.on_start && $.searchbox.settings.on_start()
         $.searchbox.idle()
+
+        var inp_this = this;
 
         return this.each(function () {
             var $input = $(this);
@@ -65,9 +77,9 @@
             .keyup(function () {
                 if ($input.val() != this.previousValue) {
                     $.searchbox.resetTimer(this.timer)
-                    console.log(this);
+
                     this.timer = setTimeout(function () {
-                        $.searchbox.process($input.val())
+                        $.searchbox.process(inp_this)
                     }, $.searchbox.settings.delay)
 
                     this.previousValue = $input.val()

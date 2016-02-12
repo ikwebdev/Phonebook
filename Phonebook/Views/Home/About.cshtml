@@ -6,25 +6,17 @@
 <script src="~/scripts/searchbox.js"></script>
 <p>Use this area to provide additional information.</p>
 
-<input class="search" type="text" />
-<input class="azaza" type="text" />
+<input class="search"  name="street" type="text" />
+<input class="search"  name="city" type="text" />
 
 <div id="thumbnails"></div>
 
 <script>
     $('input.search').searchbox({
         url: 'http://localhost:54362/Person/AllPersons',
-        param: 'q',
         dom_id: '#thumbnails',
         delay: 250,
         loading_css: '#spinner'
     });
 
-    $('input.azaza').searchbox({
-        url: 'http://localhost:54362/Person/AllPersons',
-        param: 'q',
-        dom_id: '#thumbnails',
-        delay: 250,
-        loading_css: '#spinner'
-    });
 </script>
