@@ -1,0 +1,155 @@
+﻿@model IEnumerable<Phonebook.Models.PersonViewModel>
+@section Scripts
+{
+  
+}
+
+@{
+    ViewBag.Title = "AllUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AllUser</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddUser")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            Phones
+        </th>
+        <th>
+            Addresses
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.Hidden("Id", item.Id)
+            </td>
+            <td>
+                @Html.TextBox("FirstName", item.FirstName)
+            </td>
+            <td>
+                @Html.TextBox("LastName", item.LastName)
+            </td>
+            <td>
+                @Html.TextBox("Age", item.Age)
+            </td>
+            <td>
+                <select>
+                    @foreach (var ph in item.Phones)
+                    {
+                        <option value="@ph.Id">@ph.Mobile (@ph.Type)</option>
+                    }
+                </select>
+            </td>
+            <td>
+                <select>
+                    @foreach (var add in item.Addresses)
+                    {
+                        <option>@add.street.city.country.country, @add.street.city.city, @add.street.street, @add.House</option>
+                        <option>(@add.Latitude, @add.Longtitude)</option>
+                    }
+                </select>
+            </td>
+            <td>
+
+                @*@Html.ActionLink("Modal Edit", "EditAjax/" + item.Id, "Person", null, new { @class = "modal-link btn btn-success" }) *@
+                <button type="button" class="btn btn-info ajaxModal" data-id="@item.Id" data-toggle="modal" data-target="#myModal">Modal Edit</button> |
+                @Html.ActionLink("EditUser", "EditPerson/" + item.Id, null, new { id = item.Id , @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "DeletePerson/" + item.Id, null, new { id = item.Id , @class = "btn btn-danger" })
+                @*@Html.RouteLink("Save", "Default", null, new { @class = "save_class btn btn-primary" })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+<style>
+    input[type="text"] {
+        border: none;
+    }
+
+    tr > td:first-child {
+        display: none;
+    }
+
+    tr > th:first-child {
+        display: none;
+    }
+</style>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Loading...</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('body').on('click', '.modal-link', function (e) {
+            e.preventDefault();
+            $(this).attr('data-target', '#modal-container');
+            $(this).attr('data-toggle', 'modal');
+        });   
+        $('body').on('click', '.modal-close-btn', function () {
+            $('#modal-container').modal('hide');
+        });      
+        $('#modal-container').on('hidden.bs.modal', function () {
+            $(this).removeData('bs.modal');
+        });
+        $('#CancelModal').on('click', function () {
+            return false;
+        });
+    });
+    $(".ajaxModal").on("click", function (event) {
+        console.log(event.currentTarget.dataset.id);
+        var id = event.currentTarget.dataset.id;
+        $.ajax({
+            type: 'GET',
+            url: "/Person/EditAjax/" + id,
+            success: function (data) {
+                $(".modal-body").html(data);
+            }
+        });
+    });
+
+</script>
+
+<!-- Trigger the modal with a button -->
+

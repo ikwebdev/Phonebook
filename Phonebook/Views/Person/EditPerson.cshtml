@@ -1,0 +1,108 @@
+﻿@model Phonebook.Models.PersonViewModel
+
+<h2>Edit Person</h2>
+
+<div class="form-horizontal">
+    <h4>Person</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="ajaxeble">
+        @Html.HiddenFor(model => model.Id)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10 ajaxeble">
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10  ajaxeble">
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10  ajaxeble">
+            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
+
+        </div>
+    </div>
+
+    @foreach (var item in Model.Phones)
+    {
+        <div class="form-group" id="phones">
+            <div class="phone_group col-md-10">
+                <input type="hidden" value="@item.Id" />
+                <input type="hidden" id="Id" value="@item.Person_Id" />
+                <label class="control-label col-md-2">Phone</label>
+                <input type="text" name="phone" class="form-control" value="@item.Mobile" />
+                <br />
+                <label class="control-label col-md-2">Type</label>
+                <input type="text" name="type" class="form-control" value="@item.Type" />
+            </div>
+        </div>
+    }
+    @if (Model.Phones.Count == 0)
+    {
+        <div class="form-group" id="phones">
+        </div>
+    }
+
+
+    @foreach (var item in Model.Addresses)
+    {
+        <div class="form-group" id="addresses">
+            <div class="form-group" id="addresses">
+                <div class="address_group form-inline col-md-10">
+                    <label class="control-label col-md-2">House</label>
+                    <input type="hidden" value="@item.Id" />
+                    <input type="text" name="house" class="form-control" value="@item.House"/>
+                    <br />
+                    <input type="hidden" value="@item.Steeet_Id" />
+                    <label class="control-label col-md-2">Street</label>
+                    <input type="text" name="street" class="form-control"  value="@item.street.street"/>
+                    <br />
+                    <input type="hidden" value="@item.street.city_Id" />
+                    <label class="control-label col-md-2">City</label>
+                    <input type="text" name="city" class="form-control"  value="@item.street.city.city"/>
+                    <br />
+                    <input type="hidden" value="@item.street.city.country_Id"/>
+                    <label class="control-label col-md-2">Country</label>
+                    <input type="text" name="city" class="form-control"  value="@item.street.city.country.country"/>
+                    <br />
+                    <label class="control-label col-md-2">Latitude</label>
+                    <input type="text" name="latitude" class="form-control" value="@item.Latitude" />
+                    <br />
+                    <label class="control-label col-md-2">Longtitude</label>
+                    <input type="text" name="city" class="form-control" value="@item.Longtitude" />
+                </div>
+            </div>
+        </div>
+   
+    }
+    @if (Model.Addresses.Count == 0)
+    {
+           <div class="form-group" id="addresses"></div>
+    }
+
+    <button id="add">Add new phone</button>
+    <button id="adadd">Add new address</button>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="edit_new" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Scripts/Person/editPerson.js")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
