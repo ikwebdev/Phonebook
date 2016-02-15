@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Phonebook;
 using Phonebook.Controllers;
+using DBLayer;
+using System.Web.Routing;
 
 namespace Phonebook.Tests.Controllers
 {
@@ -50,5 +52,6 @@ namespace Phonebook.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+    
     }
 }
