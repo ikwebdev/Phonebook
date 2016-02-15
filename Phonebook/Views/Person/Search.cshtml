@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Search";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+<script src="~/scripts/searchbox.js"></script>
+<p>Use this area to provide additional information.</p>
+
+<label class="label label-info">Latitude:</label>
+<input class="search form-control"  name="latitude" type="text" />
+
+<label class="label label-info">Longtitude:</label>
+<input class="search form-control"  name="longtitude" type="text" />
+
+
+<img id="spinner" src="~/pictures/395.gif" />
+<div id="thumbnails"></div>
+
+
+<script>
+    $('input.search').searchbox({
+        url: 'http://localhost:54362/Person/Search',
+        dom_id: '#thumbnails',
+        delay: 250,
+        loading_css: '#spinner'
+    });
+</script>

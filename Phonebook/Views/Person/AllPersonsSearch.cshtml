@@ -3,17 +3,6 @@
 {
   <script src="~/scripts/jquery.datatables.min.js"></script>
 }
-
-@{
-    ViewBag.Title = "AllUser";
-    @*Layout = "~/Views/Shared/_Layout.cshtml";*@
-}
-
-<h2>AllUser</h2>
-
-<p>
-    @Html.ActionLink("Create New", "AddUser")
-</p>
 <table class="table" id="myTable">
     <thead>
         <tr>
@@ -105,14 +94,6 @@
 
 <script type="text/javascript">
     $(function () {
-
-        $('#myTable').DataTable({
-            "paging": true,
-            "sDom": '<"top"f>rt<"bottom"lp><"clear">',
-            "iDisplayLength": 5,
-            "lengthMenu": [[3, 5, 10, -1], [3, 5, 10, "All"]]
-        });
-
 
         $('body').on('click', '.modal-link', function (e) {
             e.preventDefault();

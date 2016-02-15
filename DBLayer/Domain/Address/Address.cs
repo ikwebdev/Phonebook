@@ -14,8 +14,8 @@ namespace DBLayer
 
         public string House { get; set; }
 
-        public string Longtitude { get; set; }
-        public string Latitude { get; set; }
+        public double? Longtitude { get; set; }
+        public double? Latitude { get; set; }
 
         [ForeignKey("street")]
         public int Steeet_Id { get; set; }

@@ -13,8 +13,8 @@ namespace Services
 
         public string House { get; set; }
 
-        public string Longtitude { get; set; }
-        public string Latitude { get; set; }
+        public double? Longtitude { get; set; }
+        public double? Latitude { get; set; }
 
         public int Steeet_Id { get; set; }
         public virtual StreetServiceModel street { get; set; }

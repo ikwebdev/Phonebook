@@ -72,5 +72,15 @@ namespace Services
             db.Update(Mapper.Map<PersonServiceModel, Person>(item));
         }
 
+        public IEnumerable<PersonServiceModel> Search(string user_id, string country, string city, string street)
+        {
+           IEnumerable<Person> p = db.GetPersons(user_id, country, city, street);
+          //  IEnumerable<Person> pers = 
+               
+
+            IEnumerable<PersonServiceModel> ret = Mapper.Map<IEnumerable<Person>, List<PersonServiceModel>>(p);
+            return ret;
+        }
+
     }
 }

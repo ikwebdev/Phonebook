@@ -43,7 +43,7 @@
             }
 
 
-            $.get([base, '?', query_string].join(''), function (data) {
+            $.post([base, '?', query_string].join(''), function (data) {
                 $($.searchbox.settings.dom_id).html(data)
             })
         },

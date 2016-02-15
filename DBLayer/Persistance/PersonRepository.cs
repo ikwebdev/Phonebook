@@ -73,6 +73,11 @@ namespace DBLayer
             return _db.Persons.FirstOrDefault(predicate);
         }
 
+        public IEnumerable<Person> GetPersons(string user_id, string country, string city, string street)
+        {
+             return GetAllfromUserId(user_id).Where(p => p.Addresses.Contains(_db.Addresses.Where(i => i.street.street == street).FirstOrDefault()));
+        }
+
         public IEnumerable<Person> GetAll()
         {
             return _db.Persons.ToList();

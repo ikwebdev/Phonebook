@@ -14,8 +14,8 @@ namespace Phonebook.Models
 
         public string House { get; set; }
 
-        public string Longtitude { get; set; }
-        public string Latitude { get; set; }
+        public double? Longtitude { get; set; }
+        public double? Latitude { get; set; }
 
         public int Steeet_Id { get; set; }
         public virtual StreetViewModel street { get; set; }

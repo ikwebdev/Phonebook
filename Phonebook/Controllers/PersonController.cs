@@ -108,5 +108,33 @@ namespace Phonebook.Controllers
         {
             return PartialView("EditPerson", Mapper.Map<PersonServiceModel, PersonViewModel>(personService.GetById(id)));
         }
+
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Search(double latitude, double longtitude)
+        {
+            string user_id = getUserId().ToString();
+            IEnumerable<PersonServiceModel> pers = personService.GetAllfromUserId(user_id);
+            pers = pers.Where(
+                a => a.Addresses.Where(
+                    r => r.Latitude >= latitude - 0.05 && r.Latitude <= latitude + 0.05 && r.Longtitude >= longtitude - 0.05 && r.Longtitude <= longtitude + 0.05
+                ).Any());
+
+            if (pers.Count() > 0)
+            {
+                IEnumerable<PersonViewModel> p = Mapper.Map<IEnumerable<PersonServiceModel>, List<PersonViewModel>>(pers);
+                return PartialView("AllPersonsSearch", p);
+            }
+            else
+            {
+                ViewBag.Message = "Nothing found!";
+                return PartialView("Error");
+            }
+            
+        }
     }
 }
